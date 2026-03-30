@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能诊断分析 - 历史功图查询</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">📊</span> 智能诊断分析
+        </div>
+        <ul class="menu">
+            <li class="menu-item expanded">
+                <div class="menu-title">
+                    <span class="icon">📈</span> 油井工况智能诊断 <span class="arrow">▼</span>
+                </div>
+                <ul class="submenu">
+                    <li>工况统计分析</li>
+                    <li class="active">历史功图查询</li> <li>工况诊断查询</li>
+                    <li>工况报警查询</li>
+                    <li>单井分析优化</li>
+                    <li>单位分析优化</li>
+                    <li>工况变化统计</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="breadcrumbs">
+                首页 / 油井工况智能诊断 / <span>历史功图查询</span>
+            </div>
+            <div class="user-info">
+                <div class="avatar">M</div>
+                <span>mengqk10045 v</span>
+            </div>
+        </div>
+
+        <div class="workspace">
+            <div class="query-panel">
+                <div class="query-row">
+                    <div class="form-group">
+                        <label>单位</label>
+                        <select disabled><option>山东石油化工学院</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>工况类型</label>
+                        <select disabled><option>请选择</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>报警类型</label>
+                        <select disabled><option>请选择</option></select>
+                    </div>
+                    <div class="form-group">
+    					<label>井号</label>
+    					<input type="text" id="well_id" placeholder="输入井号">
+					</div>
+                </div>
+
+                <div class="query-row">
+                    <div class="form-group time-group">
+                        <label>诊断时间</label>
+                        <div class="time-inputs">
+                            <input type="datetime-local" id="start_time" value="2026-03-25T16:22">
+                            <span>-</span>
+                            <input type="datetime-local" id="end_time" value="2026-03-25T19:22">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn btn-primary" id="btn-query">查询</button>
+                        <button class="btn btn-secondary" id="btn-overlay">叠加</button>
+                        <button class="btn btn-outline" disabled>数据展现</button>
+                        <button class="btn btn-outline" disabled>标准功图</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-display-area" id="result-message">
+                </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
