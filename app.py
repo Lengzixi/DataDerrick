@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-import datetime
-
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -29,15 +28,32 @@ def query_data():
     start_time_str = data.get('start_time')
     end_time_str = data.get('end_time')
 
-    # 简单的数据过滤逻辑
+    # 将前端时间字符串转换为 datetime 对象（若为空则设为 None）
+    start_dt = None
+    end_dt = None
+    if start_time_str:
+        # datetime-local 格式：2026-03-25T16:22
+        start_dt = datetime.strptime(start_time_str, '%Y-%m-%dT%H:%M')
+    if end_time_str:
+        end_dt = datetime.strptime(end_time_str, '%Y-%m-%dT%H:%M')
+
     result_data = []
     for item in MOCK_DATABASE:
-        # 如果前端传了井号，就匹配井号；如果没有传，就查所有
+        # 井号过滤
         if well_id and well_id != item["well_id"]:
             continue
-        # 这里为了演示简单，暂时忽略具体的时间大小对比，只要井号对上就返回
+
+        # 时间过滤
+        if start_dt or end_dt:
+            # 将数据库中的时间字符串转换为 datetime 对象
+            db_dt = datetime.strptime(item["collection_time"], '%Y-%m-%d %H:%M:%S')
+            if start_dt and db_dt < start_dt:
+                continue
+            if end_dt and db_dt > end_dt:
+                continue
+
         result_data.append(item)
-    
+
     return jsonify({
         "status": "success",
         "message": "查询成功",
